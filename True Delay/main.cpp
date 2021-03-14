@@ -13,11 +13,12 @@ void delay(const std::chrono::duration<Rep, Period>& delay_duration) {
 			return;
 		}
 		if (use_sleep == true) {
-			if (delay_duration - time_elapsed < 100ms) {
+			const auto time_remaining = delay_duration - time_elapsed;
+			if (time_remaining < 100ms) {
 				use_sleep = false;
 			}
 			else {
-				std::this_thread::sleep_for(1ms);
+				std::this_thread::sleep_for(time_remaining / 2);
 			}
 		}
 	}
